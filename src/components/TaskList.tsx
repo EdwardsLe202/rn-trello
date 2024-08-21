@@ -1,4 +1,4 @@
-import { useQuery, useRealm } from "@realm/react";
+import { useQuery, useRealm, useUser } from "@realm/react";
 import { useState } from "react";
 import {
   Button,
@@ -14,6 +14,8 @@ import TaskListItem from "./TaskListItem";
 export default function TaskList() {
   const realm = useRealm();
   const tasks = useQuery<Task>(Task);
+
+  const user = useUser();
 
   const [newTask, setNewTask] = useState("");
 
