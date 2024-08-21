@@ -1,12 +1,14 @@
-import { Slot, Stack } from 'expo-router';
-import { Text } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import { ThemeProvider, DarkTheme } from '@react-navigation/native';
+import { DarkTheme, ThemeProvider } from "@react-navigation/native";
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import Realm from "../providers/Realm";
 
 export default function RootLayout() {
   return (
     <ThemeProvider value={DarkTheme}>
-      <Stack screenOptions={{}}></Stack>
+      <Realm>
+        <Stack screenOptions={{}}></Stack>
+      </Realm>
 
       <StatusBar style="light" />
     </ThemeProvider>

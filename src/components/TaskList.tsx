@@ -1,26 +1,30 @@
+import { useQuery, useRealm } from "@realm/react";
+import { useState } from "react";
 import {
-  View,
-  Text,
-  FlatList,
-  TextInput,
   Button,
+  FlatList,
   StyleSheet,
-} from 'react-native';
-import TaskListItem from './TaskListItem';
-import { useState } from 'react';
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import { Task } from "../models/Task";
+import TaskListItem from "./TaskListItem";
 
 export default function TaskList() {
-  const [tasks, setTasks] = useState([
-    { id: '123', description: 'First task' },
-    { id: '67', description: 'Second task' },
-  ]);
+  const realm = useRealm();
+  const tasks = useQuery<Task>(Task);
 
-  const [newTask, setNewTask] = useState('');
+  const [newTask, setNewTask] = useState("");
 
   const createTask = () => {
-    setTasks([...tasks, { description: newTask }]);
+    // setTasks([...tasks, { description: newTask }]);
 
-    setNewTask('');
+    realm.write(() => {
+      realm.create(Task, { description: newTask, user_id: "123" });
+    });
+
+    setNewTask("");
   };
 
   return (
@@ -49,21 +53,21 @@ export default function TaskList() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#101112',
+    backgroundColor: "#101112",
     padding: 10,
     borderRadius: 5,
     gap: 5,
   },
   title: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
     fontSize: 20,
     marginVertical: 10,
   },
   input: {
-    color: 'white',
+    color: "white",
     padding: 15,
-    backgroundColor: '#1D2125',
+    backgroundColor: "#1D2125",
     borderRadius: 5,
   },
 });
